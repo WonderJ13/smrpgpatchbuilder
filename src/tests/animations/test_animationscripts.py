@@ -1341,38 +1341,54 @@ test_cases = [
     ),
     Case(
         label="SetAMEMToRandomShort",
-        commands_factory=lambda: [SetAMEMToRandomShort()],
-        expected_bytes=[],
+        commands_factory=lambda: [
+            SetAMEMToRandomShort(
+                amem=0x60,
+                upper_bound=9,
+                identifier="jmp",
+            ),
+        ],
+        expected_bytes=[0x6B, 0x00, 0x09, 0x00],
     ),
     Case(
         label="EnableSpritesOnSubscreen",
         commands_factory=lambda: [EnableSpritesOnSubscreen()],
-        expected_bytes=[],
+        expected_bytes=[0x70],
     ),
     Case(
         label="DisableSpritesOnSubscreen",
         commands_factory=lambda: [DisableSpritesOnSubscreen()],
-        expected_bytes=[],
+        expected_bytes=[0x71],
     ),
     Case(
         label="NewEffectObject",
-        commands_factory=lambda: [NewEffectObject()],
-        expected_bytes=[],
+        commands_factory=lambda: [
+            NewEffectObject(
+                effect=EF0083_SAND_STORM_BG__2BPP_,
+                playback_off=True,
+                looping_on=False,
+                looping_off=False,
+                bit_3 = False,
+            ),
+        ],
+        expected_bytes=[0x72, 0x02, 0x53],
     ),
     Case(
         label="Pause2Frames",
         commands_factory=lambda: [Pause2Frames()],
-        expected_bytes=[],
+        expected_bytes=[0x73],
     ),
     Case(
         label="PauseScriptUntilBitsClear",
-        commands_factory=lambda: [PauseScriptUntilBitsClear()],
-        expected_bytes=[],
+        commands_factory=lambda: [
+            PauseScriptUntilBitsClear(768),
+        ],
+        expected_bytes=[0x75, 0x00, 0x03],
     ),
     Case(
         label="ClearEffectIndex",
         commands_factory=lambda: [ClearEffectIndex()],
-        expected_bytes=[],
+        expected_bytes=[0x76],
     ),
     Case(
         label="Layer3On0b0001",
@@ -1453,8 +1469,10 @@ test_cases = [
     ),
     Case(
         label="FadeOutObject",
-        commands_factory=lambda: [FadeOutObject()],
-        expected_bytes=[],
+        commands_factory=lambda: [
+            FadeOutObject(duration=2)
+        ],
+        expected_bytes=[0x7E, 0x02],
     ),
     Case(
         label="ResetSpriteSequence",
@@ -1462,40 +1480,65 @@ test_cases = [
         expected_bytes=[0x7F],
     ),
     Case(
-        label="ShineEffect", commands_factory=lambda: [ShineEffect()], expected_bytes=[]
+        label="ShineEffect",
+        commands_factory=lambda: [
+            ShineEffect(
+                colour_count=6,
+                starting_colour_index=1,
+                glow_duration=1,
+                east=True
+            ),
+        ],
+        expected_bytes=[0x80, 0x00, 0x16, 0x01],
     ),
     Case(
         label="FadeOutEffect",
-        commands_factory=lambda: [FadeOutEffect()],
-        expected_bytes=[],
+        commands_factory=lambda: [
+            FadeOutEffect(duration=1),
+        ],
+        expected_bytes=[0x85, 0x00, 0x01],
     ),
     Case(
         label="FadeOutSprite",
-        commands_factory=lambda: [FadeOutSprite()],
-        expected_bytes=[],
+        commands_factory=lambda: [
+            FadeOutSprite(duration=2),
+        ],
+        expected_bytes=[0x85, 0x10, 0x02],
     ),
     Case(
         label="FadeOutScreen",
-        commands_factory=lambda: [FadeOutScreen()],
-        expected_bytes=[],
+        commands_factory=lambda: [
+            FadeOutScreen(duration=1),
+        ],
+        expected_bytes=[0x85, 0x20, 0x01],
     ),
     Case(
         label="FadeInEffect",
-        commands_factory=lambda: [FadeInEffect()],
-        expected_bytes=[],
+        commands_factory=lambda: [
+            FadeInEffect(duration=1),
+        ],
+        expected_bytes=[0x85, 0x02, 0x01],
     ),
     Case(
         label="FadeInSprite",
-        commands_factory=lambda: [FadeInSprite()],
-        expected_bytes=[],
+        commands_factory=lambda: [
+            FadeInSprite(duration=2),
+        ],
+        expected_bytes=[0x85, 0x12, 0x02],
     ),
     Case(
         label="FadeInScreen",
-        commands_factory=lambda: [FadeInScreen()],
-        expected_bytes=[],
+        commands_factory=lambda: [
+            FadeInScreen(duration=1),
+        ],
+        expected_bytes=[0x85, 0x22, 0x01],
     ),
     Case(
-        label="ShakeScreen", commands_factory=lambda: [ShakeScreen()], expected_bytes=[]
+        label="ShakeScreen",
+        commands_factory=lambda: [
+            ShakeScreen(amount=1, speed=100),
+        ],
+        expected_bytes=[0x86, 0x01, 0x00, 0x00, 0x01, 0x64, 0x00],
     ),
     Case(
         label="ShakeSprites",
@@ -1504,13 +1547,15 @@ test_cases = [
     ),
     Case(
         label="ShakeScreenAndSprites",
-        commands_factory=lambda: [ShakeScreenAndSprites()],
-        expected_bytes=[],
+        commands_factory=lambda: [
+            ShakeScreenAndSprites(amount=5, speed=200),
+        ],
+        expected_bytes=[0x86, 0x04, 0x00, 0x00, 0x05, 0xC8, 0x00],
     ),
     Case(
         label="StopShakingObject",
         commands_factory=lambda: [StopShakingObject()],
-        expected_bytes=[],
+        expected_bytes=[0x87],
     ),
     Case(
         label="ScreenFlashWithDuration",
