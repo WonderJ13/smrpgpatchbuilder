@@ -1374,8 +1374,71 @@ test_cases = [
         commands_factory=lambda: [ClearEffectIndex()],
         expected_bytes=[],
     ),
-    Case(label="Layer3On", commands_factory=lambda: [Layer3On()], expected_bytes=[]),
-    Case(label="Layer3Off", commands_factory=lambda: [Layer3Off()], expected_bytes=[]),
+    Case(
+        label="Layer3On0b0001",
+        commands_factory=lambda: [
+            Layer3On(
+                property=OVERLAP_ALL,
+                bit_0=True,
+                bpp4=False,
+                bpp2=False,
+                invisible=False,
+            ),
+        ],
+        expected_bytes=[0x77, 0x11]
+    ),
+    Case(
+        label="Layer3On0b0010",
+        commands_factory=lambda: [
+            Layer3On(
+                property=OVERLAP_ALL,
+                bit_0=False,
+                bpp4=True,
+                bpp2=False,
+                invisible=False,
+            ),
+        ],
+        expected_bytes=[0x77, 0x12]
+    ),
+    Case(
+        label="Layer3On0b0100",
+        commands_factory=lambda: [
+            Layer3On(
+                property=OVERLAP_ALL,
+                bit_0=False,
+                bpp4=False,
+                bpp2=True,
+                invisible=False,
+            ),
+        ],
+        expected_bytes=[0x77, 0x14]
+    ),
+    Case(
+        label="Layer3On0b1000",
+        commands_factory=lambda: [
+            Layer3On(
+                property=OVERLAP_ALL,
+                bit_0=False,
+                bpp4=False,
+                bpp2=False,
+                invisible=True,
+            ),
+        ],
+        expected_bytes=[0x77, 0x18]
+    ),
+    Case(
+        label="Layer3Off0b0010",
+        commands_factory=lambda: [
+            Layer3Off(
+                property=OVERLAP_ALL,
+                bit_0=False,
+                bpp4=True,
+                bpp2=False,
+                invisible=False,
+            ),
+        ],
+        expected_bytes=[0x78, 0x12]
+    ),
     Case(
         label="DisplayMessage",
         commands_factory=lambda: [

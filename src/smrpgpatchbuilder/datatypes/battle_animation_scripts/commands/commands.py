@@ -5503,7 +5503,7 @@ class Layer3On(UsableAnimationScriptCommand, AnimationScriptCommand):
         self.set_invisible(invisible)
 
     def render(self) -> bytearray:
-        byte1 = bits_to_int([self.bit_0, self.bpp4, self.bpp2, self.invisible]) + (
+        byte1 = bools_to_int(self.bit_0, self.bpp4, self.bpp2, self.invisible) + (
             self.prop << 4
         )
         return super().render(byte1)
